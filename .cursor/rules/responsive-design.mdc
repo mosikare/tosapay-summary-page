@@ -1,0 +1,178 @@
+---
+description: 
+globs: "**/*.{html, css, js, jsx, tsx, vue, svelte}"
+alwaysApply: false
+---
+
+# Responsive Design Requirements
+
+Always ensure websites are fully responsive and mobile-friendly. Follow these guidelines:
+
+## HTML Requirements
+
+- **Viewport meta tag**: Always include `<meta name="viewport" content="width=device-width, initial-scale=1.0">` in the `<head>`
+- **Semantic HTML**: Use semantic elements (`<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<footer>`)
+- **Accessible structure**: Ensure proper heading hierarchy and ARIA labels when needed
+
+## CSS Requirements
+
+### Mobile-First Approach
+
+```css
+/* ✅ GOOD - Mobile-first */
+.container {
+  padding: 1rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+/* ❌ BAD - Desktop-first */
+.container {
+  padding: 2rem;
+  max-width: 1200px;
+}
+
+@media (max-width: 767px) {
+  .container {
+    padding: 1rem;
+    width: 100%;
+  }
+}
+```
+
+### Responsive Breakpoints
+
+Use standard breakpoints:
+- **Mobile**: Default styles (no media query)
+- **Tablet**: `@media (min-width: 768px)`
+- **Desktop**: `@media (min-width: 1024px)`
+- **Large Desktop**: `@media (min-width: 1280px)`
+
+### Flexible Units
+
+Prefer relative units over fixed pixels:
+- Use `rem` or `em` for font sizes and spacing
+- Use `%`, `vw`, `vh` for widths and heights
+- Use `max-width` instead of fixed `width` for containers
+- Avoid `px` for layout dimensions (okay for borders, shadows)
+
+```css
+/* ✅ GOOD */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 1.5rem;
+  font-size: 1rem;
+}
+
+/* ❌ BAD */
+.container {
+  width: 1200px;
+  padding: 24px;
+  font-size: 16px;
+}
+```
+
+### Flexible Layouts
+
+- Use CSS Grid or Flexbox for layouts
+- Avoid fixed heights that cause overflow
+- Ensure content wraps gracefully on smaller screens
+- Use `min-height` instead of fixed `height` when needed
+
+### Images and Media
+
+```css
+/* ✅ GOOD - Responsive images */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ✅ GOOD - Responsive video/iframe */
+video, iframe {
+  max-width: 100%;
+  height: auto;
+}
+```
+
+### Touch-Friendly Targets
+
+- Minimum touch target size: 44×44px (iOS) or 48×48px (Material Design)
+- Adequate spacing between interactive elements
+- Avoid hover-only interactions on mobile
+
+## Component Requirements (React/Vue/etc.)
+
+- Use responsive CSS classes/utilities
+- Conditionally render content based on screen size when appropriate
+- Test components at different viewport sizes
+- Use CSS-in-JS with responsive breakpoints
+
+## Testing Checklist
+
+Before completing any website, verify:
+- [ ] Works on mobile (320px - 767px)
+- [ ] Works on tablet (768px - 1023px)
+- [ ] Works on desktop (1024px+)
+- [ ] Text is readable without zooming
+- [ ] Interactive elements are easily tappable
+- [ ] No horizontal scrolling on any device
+- [ ] Images scale appropriately
+- [ ] Navigation works on all screen sizes
+
+## Common Patterns
+
+### Responsive Navigation
+
+```css
+/* Mobile: Hamburger menu */
+@media (max-width: 767px) {
+  .nav-menu {
+    display: none;
+  }
+  .hamburger {
+    display: block;
+  }
+}
+
+/* Desktop: Full menu */
+@media (min-width: 768px) {
+  .nav-menu {
+    display: flex;
+  }
+  .hamburger {
+    display: none;
+  }
+}
+```
+
+### Responsive Grid
+
+```css
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+```
